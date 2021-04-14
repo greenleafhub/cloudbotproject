@@ -6,7 +6,6 @@ import configparser
 import logging
 from datetime import date
 
-import pymongo
 from pymongo import MongoClient
 
 global mongo1
@@ -109,7 +108,7 @@ def check(update: Update, context: CallbackContext) -> None:
     results = collection.find(query)
     if results_number == 0:
         print("Creating new record: ", name, todaydate)
-        post = {"name": name, "date":todaydate}
+        post = {"name": name, "date":todaydate, "amount": 0}
         x = collection.insert_one(post)
         update.message.reply_text('Today you haven''t drink any water.')
     else:
