@@ -17,12 +17,12 @@ def main():
     
     config = configparser.ConfigParser()
     config.read('config.ini')
-    updater = Updater(token=(config['TELEGRAM']['ACCESS_TOKEN']), use_context=True) #environment
+    updater = Updater(token=(os.environ['ACCESS_TOKEN']), use_context=True) #environment
     dispatcher = updater.dispatcher
 
 
     global mongo1
-    mongo1 = client = MongoClient(config['MONGODB']['MONGO_CLIENT'])
+    mongo1 = client = MongoClient(os.environ['MONGO_CLIENT'])
     global db
     db = client['project']
     global collection
