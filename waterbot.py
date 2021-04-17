@@ -114,9 +114,10 @@ def check(update: Update, context: CallbackContext) -> None:
     else:
         for result in results:
             print("Existing record: ", result)
-        update.message.reply_text('Today you have drank ' + str(result["amount"]) +  'ml.')
-    
-
+        cups = int(result["amount"]) // 240
+        percentage = cups/8 * 100
+        update.message.reply_text('Today you have drank ' + str(result["amount"]) +  'ml, which is around ' + str(cups) + ' cup(s) of water. \nThe daily recommendation is to drink 8 cups a day. You have completed ' + str(percentage) + '% of the recommendation.')
+  
 
 if __name__ == '__main__':
     main()
