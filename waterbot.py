@@ -2,7 +2,6 @@ from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
 import os
-import configparser
 import logging
 from datetime import date
 
@@ -113,7 +112,7 @@ def check(update: Update, context: CallbackContext) -> None:
     else:
         for result in results:
             print("Existing record: ", result)
-        cups = int(result["amount"]) // 240
+        cups = int(round(int(result["amount"]) / 240))
         percentage = cups/8 * 100
         update.message.reply_text('Today you have drank ' + str(result["amount"]) +  'ml, which is around ' + str(cups) + ' cup(s) of water. \nThe daily recommendation is to drink 8 cups a day. You have completed ' + str(percentage) + '% of the recommendation.')
         
@@ -142,9 +141,9 @@ def checkpast(update: Update, context: CallbackContext) -> None:
                 print("Existing record: ", result)
                 i = i-1
                 if i < days:
-                    cups = int(result["amount"]) // 240
+                    cups = int(round(int(result["amount"]) / 240))
                     percentage = cups/8 * 100
-                    update.message.reply_text('On '+str(result["date"])+' you have drank ' + str(result["amount"]) +  'ml, which is around ' + str(cups) + ' cup(s) of water. \nThe daily recommendation is to drink 8 cups a day. You have completed ' + str(percentage) + '% of the recommendation.')
+                    update.message.reply_text('On '+str(result["date"])+' you have drank ' + str(result["amount"]) +  'ml, which is around ' + str(cups)[-4:] + ' cup(s) of water. \nThe daily recommendation is to drink 8 cups a day. You have completed ' + str(percentage) + '% of the recommendation.')
 
 
     except (IndexError, ValueError):
